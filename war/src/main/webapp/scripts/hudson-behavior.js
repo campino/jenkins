@@ -1619,19 +1619,39 @@ function applyNameRef(s,e,id) {
     }
 }
 
+function findStartTR(c, name) {
+    //find start TR
+    var s = $(c); 
+    while(!s.hasClassName(name)) {
+        s = s.up(); 
+    }
+    return s; 
+}
+
+function findNextRowVgStart(vg) {
+    while (!vg.hasClassName("rowvg-start")) {
+        vg = vg.next();
+    }
+    return vg; 
+}
+
+// used by the expand and collapse arrows to expand or collapse sections
+function toggleSectionVisibility(c) {
+    var s = findStartTR(c, "section-start"); 
+    var vg= findNextRowVgStart(s);
+    
+    c.expanded = !c.expanded; 
+    vg.rowVisibilityGroup.makeInnerVisisble(c.expanded);  
+}
 
 // used by optionalBlock.jelly to update the form status
 //   @param c     checkbox element
 function updateOptionalBlock(c,scroll) {
     // find the start TR
-    var s = $(c);
-    while(!s.hasClassName("optional-block-start"))
-        s = s.up();
+    var s = findStartTR(c, "optional-block-start");
 
     // find the beginning of the rowvg
-    var vg =s;
-    while (!vg.hasClassName("rowvg-start"))
-        vg = vg.next();
+    var vg =findNextRowVgStart(s);
 
     var checked = xor(c.checked,Element.hasClassName(c,"negative"));
 

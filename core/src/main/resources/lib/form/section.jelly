@@ -38,13 +38,16 @@ THE SOFTWARE.
 
   <st:adjunct includes="lib.form.section_" />
   <f:rowSet name="${attrs.name}">
-    <j:if test="${attrs.title!=null}">
-      <f:block>
-        <div class="section-header">
+<j:if test="${attrs.title!=null}">
+      <f:block class="section-start">
+<A onclick="javascript:toggleSectionVisibility(this)">(expand)</A>        
+<div class="section-header">
           ${title}
         </div>
       </f:block>
     </j:if>
+<tr class="rowvg-start" />
     <d:invokeBody />
+<tr class="rowvg-end section-end" />
   </f:rowSet>
 </j:jelly>
